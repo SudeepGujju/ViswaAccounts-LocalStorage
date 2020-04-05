@@ -8,11 +8,11 @@ const app = express();
 
 const server = http.createServer(app);
 
-app.use(express.static(path.join(__dirname, "/UI")));
+app.use(express.static(path.join(__dirname, "/dist/giftshop")));
 
 app.get("/*", function (req, res, next) {
     return res.sendFile(
-        path.join(__dirname, "/UI/index.html")
+        path.join(__dirname, "/giftshop/index.html")
     );
 });
 
