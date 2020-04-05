@@ -1,0 +1,9 @@
+<div [@slider]="selectedIndex" class="carousel-main">
+    <div *ngFor="let image of images" [ngStyle]="{'background-image':'url('+image+')'}"></div>
+    <button mat-mini-fab class="previous" color="" (click)="previous();">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-mini-fab class="next" color="" (click)="next()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+</div>

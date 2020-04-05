@@ -1,0 +1,211 @@
+<app-slider></app-slider>
+<button mat-mini-fab class="previous" color="primary" (click)="previous();"><mat-icon>keyboard_arrow_left</mat-icon></button>
+<button mat-mini-fab class="next" color="primary" (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+<div [@slider]="selectedIndex" class="carousel-main" data-ride="carousel" style="margin: 20px 10px;">
+    <div *ngFor="let image of images"> <img [src]="image" /> </div>
+</div>
+
+import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate, group, query } from '@angular/animations';
+
+@Component({
+  selector: 'app-carousel',
+  templateUrl: './carousel.component.html',
+  styleUrls: ['./carousel.component.scss'],
+  animations:[
+    trigger('slider',[
+      transition(":increment", group([
+        query(':enter', [
+          style({
+            left: '100%'
+          }),
+          animate('0.5s ease-out', style('*'))
+        ]),
+        query(':leave', [
+          animate('0.5s ease-out', style({
+            left: '-100%'
+          }))
+        ])
+      ])),
+      transition(":decrement", group([
+        query(':enter', [
+          style({
+            left: '-100%'
+          }),
+          animate('0.5s ease-out', style('*'))
+        ]),
+        query(':leave', [
+          animate('0.5s ease-out', style({
+            left: '100%'
+          }))
+        ])
+      ])),
+    ])
+  ]
+})
+export class CarouselComponent implements OnInit {
+
+  readonly SlideDirectionLeft = 1;
+  readonly SlideDirectionRight = 2;
+
+  imagesList: string[];
+  currentImage: number = 0;
+  slideDirection: number = this.SlideDirectionLeft;
+  constructor() { }
+
+  ngOnInit() {
+    this.imagesList = [
+      "https://pixelz.cc/wp-content/uploads/2018/08/wall-e-uhd-4k-wallpaper.jpg",
+      "https://i.pinimg.com/originals/23/26/c5/2326c5a4ded3fcdf3c80ad237ab46b3f.jpg",
+      "https://images.unsplash.com/photo-1521540546296-9f2d04fd9261?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+    ];
+  }
+
+  selectedIndex: number = 0;
+  get images() {
+    return [this.imagesList[this.selectedIndex]];
+  }
+  next(){
+    this.selectedIndex = Math.max(this.selectedIndex - 1, 0);
+  }
+  previous(){
+    this.selectedIndex = Math.min(this.selectedIndex + 1, this.imagesList.length - 1);
+  }
+
+  nextImage() {
+
+    this.slideDirection = this.SlideDirectionLeft;
+    // if (this.currentImage != this.imagesList.length - 1)
+    //   this.currentImage += 1;
+
+    if (this.currentImage == this.imagesList.length - 1)
+      this.currentImage = 0;
+    else
+      this.currentImage += 1;
+  }
+
+  previousImage() {
+
+    this.slideDirection = this.SlideDirectionRight;
+    if (this.currentImage == 0)
+      this.currentImage = this.imagesList.length - 1;
+    else
+      this.currentImage -= 1;
+  }
+}
+
+
+
+
+
+
+
+
+
+trigger('CarouselNext',[
+      state('In',style({
+        left:'0%',
+      })),
+      state('Out',style({
+        left:'-100%',
+        display:'none'
+      })),
+      transition('In => Out',[
+        style({
+          left:'0%',
+        }),
+        animate('2s')
+      ]),
+      transition('Out => In',[
+        style({
+          left: '100%',
+          display:'block'
+        }),
+        animate('2s')
+      ]),
+    ]),
+    trigger('CarouselPrevious',[
+      state('In',style({
+        right:'0%',
+      })),
+      state('Out',style({
+        right:'-100%',
+        display:'none'
+      })),
+      transition('In => Out',[
+        style({
+          right:'0%',
+        }),
+        animate('2s')
+      ]),
+      transition('Out => In',[
+        style({
+          right: '100%',
+          display:'block'
+        }),
+        animate('2s')
+      ]),
+    ]),
+
+    <!-- [@Carousel]="i==currentImage ? 'Show' : 'Hide'" -->
+    <!-- <mat-card *ngFor="let img of imagesList; index as i" style="height: 250px;" [ngStyle]="{'display': i==currentImage ? '' : 'none'}">
+        <img style="height: 113%;" mat-card-image [src]="img">
+    </mat-card>
+    <div [@CarouselPrevious]="slideDirection == SlideDirectionRight && (i==currentImage ? 'In':'Out')" [@CarouselNext]="slideDirection == SlideDirectionLeft && (i==currentImage ? 'In':'Out')" *ngFor="let img of imagesList; index as i" [ngStyle]="{'background-image':'url('+img+')'}">
+    </div> -->
+
+    <button mat-mini-fab class="previous" color="primary" (click)="previousImage();"><mat-icon>keyboard_arrow_left</mat-icon></button>
+    <button mat-mini-fab class="next" color="primary" (click)="nextImage();"><mat-icon>keyboard_arrow_right</mat-icon></button>
+
+
+
+
+
+
+
+// @import './../../../../stylePollyfill';
+
+// .carousel-main{
+//     position: relative;
+//     height: 300px;
+
+//     button{
+//         position: absolute;
+//         top:50%;
+//         opacity: 0.8;
+//         @include transform(translateY(-50%));
+
+//         &.previous{
+//             left:2%;
+//         }
+//         &.next{
+//             right:2%;
+//         }
+//     }
+
+//     div{
+//         display: none;
+//         position: absolute;
+//         border-radius: 10px;
+//         width:100%;
+//         height: inherit;
+//         background-size: cover;
+//         background-repeat: no-repeat;
+//         background-position: center center;
+//         background-origin: border-box;
+//         @include shadow(0px 5px 14px 1px);
+//     }
+
+// }
+
+.carousel-main {
+    position:relative;
+    height: 400px;
+    width: 400px;
+    overflow:hidden;
+    border: 2px solid;
+
+    div{
+        position: absolute;
+    }
+  }

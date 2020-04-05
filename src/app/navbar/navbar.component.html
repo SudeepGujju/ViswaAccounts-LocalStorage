@@ -1,0 +1,72 @@
+<mat-sidenav-container [hasBackdrop]="(isHandSet$ | async) === true" (backdropClick)="sidenav.close()">
+    <!-- [opened]="(isHandSet$ | async) === false" -->
+    <mat-sidenav #sidenav disableClose [mode]="(isHandSet$ | async) ? 'over' : 'push'" position="start" role="navigation">
+        <mat-toolbar color='primary'>
+            <button mat-flat-button color='primary'>E-Commerce</button>
+            <button mat-button (click)="sidenav.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-list>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Pepper </mat-list-item>
+            <mat-list-item> Salt </mat-list-item>
+            <mat-list-item> Paprika </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content role="main">
+        <mat-toolbar color='primary'>
+            <div>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <ng-container *ngIf="!(isHandSet$ | async)">
+                    <button mat-button> Birthday</button>
+                    <button mat-button> Anniversary</button>
+                    <button mat-button> Personal</button>
+                    <button mat-button> Official</button>
+                    <button mat-button [routerLink]="'shop'"> Shop</button>
+                </ng-container>
+            </div>
+            <div class="example-spacer"></div>
+            <div>
+                <mat-form-field id="matTxtFld" appearance="standard">
+                    <mat-label>search</mat-label>
+                    <input type="text" matInput>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <button mat-icon-button title="GoTo Cart" >
+                    <mat-icon>shopping_cart</mat-icon>0
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                    <mat-icon>person</mat-icon>
+                </button>
+                <mat-menu #userMenu="matMenu" backdropClass="backdrop" overlapTrigger="false">
+                    <button mat-menu-item><mat-icon svgIcon="sign-in-alt"></mat-icon>Login / Register</button>
+                    <!-- <mat-divider></mat-divider>
+                    <button mat-menu-item><mat-icon>person_add</mat-icon>Register</button> -->
+                </mat-menu>
+            </div>
+        </mat-toolbar>
+        <div id="contentDiv" #contentDiv (scroll)="onContentScroll($event)">
+            <ng-content></ng-content>
+        </div>
+        <button *ngIf="displayScrollTop" mat-fab color="primary" id="scrollToTop" (click)="scrollToTop()">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+    </mat-sidenav-content>
+</mat-sidenav-container>

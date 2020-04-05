@@ -1,0 +1,15 @@
+.container{
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    margin: 5px 0px;
+}
+
+table{   
+    width: 100%;
+}
+
+mat-form-field{
+    width: 90%;
+}

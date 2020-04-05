@@ -1,0 +1,14 @@
+<h1>Shop Module - {{user?.username}}</h1>
+
+<button mat-raised-button color="primary" (click)="openDialog('createAccnt')">Create Account</button>&nbsp;
+<button mat-raised-button color="primary" [routerLink]="'AccountsList'">View Accounts List</button>&nbsp;
+<button mat-raised-button color="primary" (click)="openDialog('createVchr')">Create Voucher</button>&nbsp;
+<button mat-raised-button color="primary" [routerLink]="'VouchersList'">View Vouchers List</button>&nbsp;
+<button mat-raised-button color="primary" (click)="openDialog('createInvntry')">Create Inventory</button>&nbsp;
+<button mat-raised-button color="primary" [routerLink]="'InventoryList'">View Inventory List</button>&nbsp;
+<button mat-raised-button color="primary" (click)="openDialog('createGroup')">Create Group</button>&nbsp;
+<button mat-raised-button color="primary" [routerLink]="'GroupsList'">View Groups List</button>&nbsp;
+<button mat-raised-button color="primary" (click)="logout()" color="accent" title="Logout">
+    <mat-icon>logout</mat-icon>
+</button>
+<router-outlet></router-outlet>

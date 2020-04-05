@@ -1,0 +1,14 @@
+
+mat-card{
+    margin: 10px 0px;
+}
+
+mat-card-content > div{
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+
+    img{
+        height: 200px;
+    }
+}

@@ -1,0 +1,53 @@
+<div class="container">
+    <mat-card class="mat-elevation-z8">
+        <mat-card-title>Register</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="registrationForm" (ngSubmit)="register()">
+                <div *ngIf="errMsg" class="error">
+                    {{this.errMsg}}
+                </div>
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput formControlName="username" required minlength="5" maxlength="15">
+                    <mat-error *ngIf="username.hasError('required')">
+                        Enter username
+                    </mat-error>
+                    <mat-error *ngIf="username.hasError('minlength')">
+                        Username must be 5-15 characters
+                    </mat-error>
+                    <mat-error *ngIf="username.hasError('userAlreadyExists')">
+                        Username already exists
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password" required minlength="8" maxlength="15">
+                    <mat-error *ngIf="password.hasError('required')">
+                        Enter password
+                    </mat-error>
+                    <mat-error *ngIf="password.hasError('minlength')">
+                        Password must be 8-15 characters
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput formControlName="cpassword" required minlength="8" maxlength="15">
+                    <mat-error *ngIf="cpassword.hasError('required')">
+                        Enter confirm password
+                    </mat-error>
+                    <mat-error *ngIf="cpassword.hasError('minlength')">
+                        Password must be 8-15 characters
+                    </mat-error>
+                    <mat-error *ngIf="cpassword.hasError('pswdNotMatch')">
+                        Passwords donot match
+                    </mat-error>
+                </mat-form-field>
+                <button type="submit" mat-raised-button color="primary">Register</button>
+                <div>
+                    Already have an account?
+                    <a [routerLink]="['/shop/login']">Login</a>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

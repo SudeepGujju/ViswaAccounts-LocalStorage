@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@angular/material/prebuilt-themes/purple-green.css';
+@import 'stylePollyfill';
+
+// html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-drawer-inner-container, .mat-sidenav-content{
+  overflow: hidden !important;
+}
+
+// input[type='number']
+// {
+//     &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+//     {
+//         display: none;
+//     }
+//     -moz-appearance: textfield;
+// }
+/*
+** Polyfill for flex
+**
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
+  
+  @mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex:  $values;
+    -webkit-flex:  $values;
+    -ms-flex:  $values;
+    flex:  $values;
+  }
+  
+  @mixin order($val) {
+    -webkit-box-ordinal-group: $val;  
+    -moz-box-ordinal-group: $val;     
+    -ms-flex-order: $val;     
+    -webkit-order: $val;  
+    order: $val;
+  }
+  
+  .wrapper {
+    @include flexbox();
+  }
+  
+  .item {
+    @include flex(1 200px);
+    @include order(2);
+  } 
+*/
