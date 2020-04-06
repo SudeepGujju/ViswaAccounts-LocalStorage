@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject, HostBinding, ElementRef, forwardRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, HostBinding, ElementRef, forwardRef, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AsyncValidatorFn, AbstractControl, ValidationErrors, FormGroupDirective, NgForm } from '@angular/forms';
 import { ShopService } from '../services/shop.service';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { map, delay, catchError, tap, startWith } from 'rxjs/operators';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../services/auth.service';
@@ -14,13 +14,15 @@ import { GroupService } from '../services/group.service';
   templateUrl: './shop-details.component.html',
   styleUrls: ['./shop-details.component.scss'],
 })
-export class ShopDetailsComponent implements OnInit {
+export class ShopDetailsComponent implements OnInit, OnDestroy{
 
   shopDtlsForm: FormGroup;
   recordID: string;
   pageMode = 'Create';
   defaultAmount = '0.00';
   filteredGroupOptions: Observable<Group[]>;
+  isSmallScrn: boolean = false;
+  private isSmallScrnSubscription: Subscription;
 
   private groupsList: Group[] = [];
 
@@ -29,6 +31,11 @@ export class ShopDetailsComponent implements OnInit {
   constructor(public fb: FormBuilder, private shpSrvc: ShopService, private authSrvc: AuthService, private grpSrvc: GroupService, private dialogRef: MatDialogRef<ShopDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+
+    this.isSmallScrnSubscription = this.authSrvc.isHandSet$.subscribe(
+      (ismall)=>{this.isSmallScrn = ismall},
+      (error)=>{}
+    );
 
     if (this.data && this.data.pageMode && this.data.pageMode.trim().length > 0) {
       this.pageMode = this.data.pageMode.toLowerCase();
@@ -73,6 +80,10 @@ export class ShopDetailsComponent implements OnInit {
           startWith(''),
           map(value => value ? this._filter(value) : this.groupsList.slice())
         );
+  }
+
+  ngOnDestroy(){
+    this.isSmallScrnSubscription.unsubscribe();
   }
 
   onSelectgroupCode({option}) {

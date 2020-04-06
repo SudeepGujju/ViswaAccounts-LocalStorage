@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { GroupService } from '../services/group.service';
 import { AuthService } from '../services/auth.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { delay, map, catchError, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -11,15 +11,22 @@ import { delay, map, catchError, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './group-details.component.html',
   styleUrls: ['./group-details.component.scss']
 })
-export class GroupDetailsComponent implements OnInit {
+export class GroupDetailsComponent implements OnInit, OnDestroy{
 
   groupDtlsForm: FormGroup;
   recordID: string;
   pageMode = 'Create';
+  isSmallScrn: boolean = false;
+  private isSmallScrnSubscription: Subscription;
 
   constructor(public fb: FormBuilder, private grpSrvc: GroupService, private authSrvc: AuthService, private dialogRef: MatDialogRef<GroupDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+
+    this.isSmallScrnSubscription = this.authSrvc.isHandSet$.subscribe(
+      (ismall)=>{this.isSmallScrn = ismall},
+      (error)=>{}
+    );
 
     if (this.data && this.data.pageMode && this.data.pageMode.trim().length > 0) {
       this.pageMode = this.data.pageMode.toLowerCase();
@@ -41,6 +48,10 @@ export class GroupDetailsComponent implements OnInit {
       this.recordID = this.data.record.code;
       this.groupDtlsForm.patchValue(this.data.record);
     }
+  }
+
+  ngOnDestroy(){
+    this.isSmallScrnSubscription.unsubscribe();
   }
 
   get name() {

@@ -1,5 +1,5 @@
 <form [formGroup]="inventoryDtlsForm" (submit)="save()">
-    <div class="flex-space" mat-dialog-title>
+    <div class="flex-title" mat-dialog-title>
         <div>{{pageMode | uppercase}} - Inventory</div>
         <div mat-dialog-close>
             <button type="button" mat-icon-button isIconButton="true" aria-label="close dialog" tabindex="-1">
@@ -8,8 +8,8 @@
         </div>
     </div>
     <div mat-dialog-content>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>Inventory Type</mat-label>
                 <mat-select formControlName="invntryType" required [disabled]="pageMode != 'create'">
                     <mat-option value="sale">Sale</mat-option>
@@ -19,7 +19,7 @@
                     <mat-option value="other">Other</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="cus-readonly">
+            <mat-form-field class="cus-readonly">
                 <mat-label>SL</mat-label>
                 <input type="text" matInput formControlName="SL" maxlength="50" readonly required numbersOnly>
                 <mat-hint align="start">This field is required</mat-hint>
@@ -28,8 +28,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>Date</mat-label>
                 <input type="text" matInput formControlName="date" maxlength="14" required placeholder="DD / MM / YYYY"
                     dateOnly>
@@ -41,7 +41,7 @@
                     Enter date in valid format
                 </mat-error>
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="">
+            <mat-form-field>
                 <mat-label>Cash/Credit</mat-label>
                 <mat-select formControlName="cashRcredit" required>
                     <mat-option value="cash">Cash</mat-option>
@@ -49,17 +49,17 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="flex-space" matAutocompleteOrigin #fromCodeOrigin="matAutocompleteOrigin">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-3">
+        <div class="flex-fixed-dir" matAutocompleteOrigin #fromCodeOrigin="matAutocompleteOrigin">
+            <mat-form-field class="space-3">
                 <mat-label>From Code</mat-label>
-                <input type="text" class="cus-uppercase" matInput formControlName="fromCode" maxlength="50"
+                <input type="text" matInput formControlName="fromCode" maxlength="50"
                     [matAutocomplete]="autoFrmCode" required [matAutocompleteConnectedTo]="fromCodeOrigin"
-                    (blur)="validateNSetFromCode($event.target.value)">
+                    (blur)="validateNSetFromCode($event.target.value)" uppercase>
                 <mat-error *ngIf="fromCode.hasError('InvalidCode')">
                     Enter valid code
                 </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="space-7">
                 <mat-label>Firm Name</mat-label>
                 <input type="text" matInput readonly #fromCodeFirmName tabindex="-1">
             </mat-form-field>
@@ -69,17 +69,17 @@
                     {{option.firmName + (option.town.length > 0 ? ' - ' + option.town : '') }}</mat-option>
             </mat-autocomplete>
         </div>
-        <div class="flex-space" matAutocompleteOrigin #toCodeOrigin="matAutocompleteOrigin">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-3">
+        <div class="flex-fixed-dir" matAutocompleteOrigin #toCodeOrigin="matAutocompleteOrigin">
+            <mat-form-field  class="space-3">
                 <mat-label>To Code</mat-label>
-                <input type="text" class="cus-uppercase" matInput formControlName="toCode" maxlength="50"
+                <input type="text" matInput formControlName="toCode" maxlength="50"
                     [matAutocomplete]="autoToCode" required [matAutocompleteConnectedTo]="toCodeOrigin"
-                    (blur)="validateNSetToCode($event.target.value)">
+                    (blur)="validateNSetToCode($event.target.value)" uppercase>
                 <mat-error *ngIf="toCode.hasError('InvalidCode')">
                     Enter valid code
                 </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="space-7">
                 <mat-label>Firm Name</mat-label>
                 <input type="text" matInput readonly #toCodeFirmName tabindex="-1">
             </mat-form-field>
@@ -89,8 +89,8 @@
                     {{option.firmName + (option.town.length > 0 ? ' - ' + option.town : '') }}</mat-option>
             </mat-autocomplete>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>Invoice number</mat-label>
                 <input type="text" matInput formControlName="invcNo" maxlength="50" required>
                 <mat-hint align="start">This field is required</mat-hint>
@@ -101,7 +101,7 @@
                     Enter invoice number
                 </mat-error>
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>Invoice Date</mat-label>
                 <input type="text" matInput formControlName="invcDate" maxlength="14" required
                     placeholder="DD / MM / YYYY" dateOnly>
@@ -114,62 +114,62 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>5% Amount</mat-label>
                 <input type="text" matInput formControlName="fiveAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" (blur)="calcPerValue(5, fiveAmt, fivePerAmt)">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>5% GST</mat-label>
                 <input type="text" matInput formControlName="fivePerAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>12% Amount</mat-label>
                 <input type="text" matInput formControlName="twelveAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" (blur)="calcPerValue(12, twelveAmt, twelvePerAmt)">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>12% GST</mat-label>
                 <input type="text" matInput formControlName="twelvePerAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>18% Amount</mat-label>
                 <input type="text" matInput formControlName="eighteenAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" (blur)="calcPerValue(18, eighteenAmt, eighteenPerAmt)">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>18% GST</mat-label>
                 <input type="text" matInput formControlName="eighteenPerAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>28% Amount</mat-label>
                 <input type="text" matInput formControlName="twntyEightAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" (blur)="calcPerValue(28, twntyEightAmt, twntyEightPerAmt)">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>28% GST</mat-label>
                 <input type="text" matInput formControlName="twntyEightPerAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>Total Amount</mat-label>
                 <input type="text" matInput formControlName="totalAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>Total GST</mat-label>
                 <input type="text" matInput formControlName="totalPerAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field>
                 <mat-label>0% Amount</mat-label>
                 <input type="text" matInput formControlName="zeroAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, setDefaultValue: true}" (blur)="updateTotalInvcAmt();">
             </mat-form-field>
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" class="space-10">
+            <mat-form-field>
                 <mat-label>Rounding</mat-label>
                 <input type="text" matInput formControlName="roundingAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, allowNegative: true, setDefaultValue: true}" (blur)="updateTotalInvcAmt();">
                 <mat-error *ngIf="roundingAmt.hasError('cannotBeLess')">
@@ -177,8 +177,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto" >
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field class="space-full">
                 <mat-label>Total Invoice Amount</mat-label>
                 <input type="text" matInput formControlName="totalInvcAmt" maxlength="15" [numbersOnly]="{allowDecimal: true, allowNegative: true, setDefaultValue: true}" readonly tabindex="-1">
             </mat-form-field>

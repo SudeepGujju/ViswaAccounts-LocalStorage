@@ -1,7 +1,7 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, from } from 'rxjs';
+import { Observable, from, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Shop } from '../data/shop';
 import { AuthService } from '../services/auth.service';
@@ -15,13 +15,15 @@ import { getDefaultDate } from '../utils/number-only.directive';
   templateUrl: './vouchers-details.component.html',
   styleUrls: ['./vouchers-details.component.scss']
 })
-export class VouchersDetailsComponent implements OnInit {
+export class VouchersDetailsComponent implements OnInit, OnDestroy {
 
   voucherDtlsForm: FormGroup;
   recordID: string;
   pageMode = 'Create';
   filteredFromOptions: Observable<Shop[]>;
   filteredToOptions: Observable<Shop[]>;
+  isSmallScrn: boolean = false;
+  private isSmallScrnSubscription: Subscription;
 
   public defaultAmount = '0.00';
   public defaultDate = getDefaultDate();
@@ -33,6 +35,12 @@ export class VouchersDetailsComponent implements OnInit {
   constructor(public fb: FormBuilder, private vouchSrvc: VouchersService, private shpSrvc: ShopService, private authSrvc: AuthService, private dialogRef: MatDialogRef<VouchersDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+
+    this.isSmallScrnSubscription = this.authSrvc.isHandSet$.subscribe(
+      (ismall)=>{this.isSmallScrn = ismall},
+      (error)=>{}
+    );
+
     if (this.data && this.data.pageMode && this.data.pageMode.trim().length > 0) {
       this.pageMode = this.data.pageMode.toLowerCase();
     } else {
@@ -72,6 +80,10 @@ export class VouchersDetailsComponent implements OnInit {
           startWith(''),
           map(firmName => firmName ? this._filter(firmName) : this.shopsList.slice())
         );
+  }
+
+  ngOnDestroy(){
+    this.isSmallScrnSubscription.unsubscribe();
   }
 
   onSelectFromCode({option}) {

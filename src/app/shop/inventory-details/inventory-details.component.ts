@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Shop } from '../data/shop';
 import { getDefaultDate } from '../utils/number-only.directive';
 import { InventoryService } from '../services/inventory.service';
@@ -15,13 +15,15 @@ import { startWith, map, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './inventory-details.component.html',
   styleUrls: ['./inventory-details.component.scss']
 })
-export class InventoryDetailsComponent implements OnInit {
+export class InventoryDetailsComponent implements OnInit, OnDestroy {
 
   inventoryDtlsForm: FormGroup;
   recordID: string;
   pageMode = 'Create';
   filteredFromOptions: Observable<Shop[]>;
   filteredToOptions: Observable<Shop[]>;
+  isSmallScrn: boolean = false;
+  private isSmallScrnSubscription: Subscription;
 
   public defaultAmount = '0.00';
   public defaultDate = getDefaultDate();
@@ -33,6 +35,12 @@ export class InventoryDetailsComponent implements OnInit {
   constructor(public fb: FormBuilder, private invtrySrvc: InventoryService, private shpSrvc: ShopService, private authSrvc: AuthService, private dialogRef: MatDialogRef<InventoryDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+
+    this.isSmallScrnSubscription = this.authSrvc.isHandSet$.subscribe(
+      (ismall)=>{this.isSmallScrn = ismall},
+      (error)=>{}
+    );
+
     if (this.data && this.data.pageMode && this.data.pageMode.trim().length > 0) {
       this.pageMode = this.data.pageMode.toLowerCase();
     } else {
@@ -120,6 +128,10 @@ export class InventoryDetailsComponent implements OnInit {
         this.invntryType.updateValueAndValidity();
       });
     }
+  }
+
+  ngOnDestroy(){
+    this.isSmallScrnSubscription.unsubscribe();
   }
 
   onSelectFromCode({option}) {

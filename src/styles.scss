@@ -11,6 +11,66 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   overflow: hidden !important;
 }
 
+.flex-title
+{
+  width: 100%;
+  display: flex !important;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 5px !important;
+}
+
+.flex-space{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 5px !important;
+
+  mat-form-field{
+    width: 49% !important;
+  }
+
+  mat-form-field.space-full{
+    width: 100% !important;
+  }
+
+  mat-form-field.space-3{
+    width: 29% !important;
+  }
+
+  mat-form-field.space-7{
+    width: 69% !important;
+  }
+
+  mat-autocomplete{
+    display: none;
+  }
+
+  &.flex-space-sm{
+    flex-direction: column;
+  
+    mat-form-field{
+      width: 100% !important;
+    }
+  }
+}
+
+.flex-space:last-child{
+  margin-bottom: 0px !important;
+}
+
+.flex-fixed-dir{
+  @extend .flex-space;  
+  flex-direction: row;
+}
+
+.cus-readonly
+{    
+  background-color: gainsboro;
+}
+
 // input[type='number']
 // {
 //     &::-webkit-outer-spin-button, &::-webkit-inner-spin-button

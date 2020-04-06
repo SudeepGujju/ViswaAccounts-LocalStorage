@@ -12,12 +12,11 @@ app.use(express.static(path.join(__dirname, "/dist/giftshop")));
 
 app.get("/*", function (req, res, next) {
     return res.sendFile(
-        path.join(__dirname, "/giftshop/index.html")
+        path.join(__dirname, "/dist/giftshop/index.html")
     );
 });
 
 app.use('**', function (req, res) {
-    console.log(req.url);
     res.status(404);
     res.send('Invalid request method/url');
 });

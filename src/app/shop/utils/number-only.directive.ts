@@ -206,11 +206,11 @@ export class UpperCaseDirective {
   constructor(private _el: ElementRef, private control: NgControl) {}
 
   @HostListener('input', ['$event'])onInputChange(event) {
-    
+
     let value = this.control.control.value;
     
     if(value && value !== value.toUpperCase()){
-    this.control.control.setValue(this.control.control.value.toUpperCase());
+      this.control.control.setValue(this.control.control.value.toUpperCase());
+    }
   }
-}
 }

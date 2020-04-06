@@ -5,6 +5,8 @@ import { Shop } from '../data/shop';
 import { Voucher } from '../data/voucher';
 import { Inventory } from '../data/inventory';
 import { Group } from '../data/group';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -12,10 +14,16 @@ export class AuthService {
   private users: User[] = [];
   private userBehaviourSubject: BehaviorSubject<User>;
   public userObservable$: Observable<User>;
+  public isHandSet$: Observable<boolean>;
 
-  constructor() {
+  constructor(private breakpointObserver: BreakpointObserver) {
     // this.users.push({ username: 'test', password: "123456", id: "1" });
     // this.users.push({ username: 'alpha', password: "123456", id: "2" });
+
+    this.isHandSet$ = breakpointObserver.observe([Breakpoints.XSmall]).pipe(
+      map((result) => result.matches),
+      shareReplay()// Find Usage
+    );
 
     this.userBehaviourSubject = new BehaviorSubject(null); // this.getLoggedInUserFromStorage()
 

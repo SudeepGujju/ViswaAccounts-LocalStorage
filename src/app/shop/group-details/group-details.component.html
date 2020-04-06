@@ -1,5 +1,5 @@
 <form [formGroup]="groupDtlsForm" (submit)="save()">
-    <div class="flex-space" mat-dialog-title>
+    <div class="flex-title" mat-dialog-title>
         <div>{{pageMode | uppercase}} - Group</div>
         <div mat-dialog-close>
             <button type="button" mat-icon-button isIconButton="true" aria-label="close dialog" tabindex="-1">
@@ -8,10 +8,10 @@
         </div>
     </div>
     <div mat-dialog-content>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field class="space-full">
                 <mat-label>Code</mat-label>
-                <input type="text" matInput formControlName="code" maxlength="50" required>
+                <input type="text" matInput formControlName="code" maxlength="50" required uppercase>
                 <mat-spinner *ngIf="code.pending" mode="indeterminate" diameter="20" matSuffix></mat-spinner>
                 <mat-hint align="start">This field is required</mat-hint>
                 <mat-hint align="end">
@@ -22,8 +22,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field class="space-full">
                 <mat-label>Name</mat-label>
                 <input type="text" matInput formControlName="name" maxlength="50" required uppercase>
                 <mat-hint align="start">This field is required</mat-hint>
@@ -35,8 +35,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex-space">
-            <mat-form-field hideRequiredMark="false" floatLabel="auto">
+        <div class="flex-space" [class.flex-space-sm]="isSmallScrn">
+            <mat-form-field class="space-full">
                 <mat-label>Type</mat-label>
                 <mat-select formControlName="grpType" required>
                     <mat-option value="trading">Trading</mat-option>
