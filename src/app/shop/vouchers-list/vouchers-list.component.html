@@ -1,12 +1,13 @@
-<div class="container">
-    <div>
-        <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput type="text" (keyup)="applyFilter($event.target.value)">
-        </mat-form-field>
-        &nbsp;
+<div class="flex-space">
+    <mat-form-field class="space-9">
+        <mat-label>Filter</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+    <div class="space-1">
         <button mat-raised-button color="primary" (click)="refresh()">Refresh</button>
     </div>
+</div>
+<div class="container">
     <table mat-table class="mat-elevation-z8" [dataSource]="voucherListDS" [trackBy]="trackList" matSort>
         <ng-container matColumnDef="SL">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>

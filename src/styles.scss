@@ -24,6 +24,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 5px !important;
@@ -32,16 +33,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 49% !important;
   }
 
-  mat-form-field.space-full{
+  .space-full{
     width: 100% !important;
   }
 
-  mat-form-field.space-3{
+  .space-1{
+    width: 9% !important;
+    min-width: 100px;
+    & > button {
+      width: 100%;
+    }
+  }
+
+  .space-3{
     width: 29% !important;
   }
 
-  mat-form-field.space-7{
+  .space-7{
     width: 69% !important;
+  }
+
+  .space-9{
+    width: 89% !important;
   }
 
   mat-autocomplete{
@@ -64,6 +77,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .flex-fixed-dir{
   @extend .flex-space;  
   flex-direction: row;
+}
+
+
+table, mat-paginator{
+  width: 100%;
+  overflow: hidden;
+}
+
+th.mat-header-cell
+{
+  font-size: 0.9rem;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: bold;
+  color: black;
+}
+
+td.mat-cell, td.mat-footer-cell
+{
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .cus-readonly
