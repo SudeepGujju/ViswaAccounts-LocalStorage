@@ -6,7 +6,7 @@ import { VouchersDetailsComponent } from '../vouchers-details/vouchers-details.c
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class VouchersService {
+export class VoucherService {
 
   private vouchersList: Voucher[];
   // private vouchersListBehaviourSubject: BehaviorSubject<Voucher[]>;

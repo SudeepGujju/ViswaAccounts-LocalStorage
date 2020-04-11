@@ -4,7 +4,7 @@ import { Voucher } from '../data/voucher';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { VouchersService } from '../services/vouchers.service';
+import { VoucherService } from '../services/vouchers.service';
 
 @Component({
   selector: 'app-vouchers-list',
@@ -20,7 +20,7 @@ export class VouchersListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private vochSrvc: VouchersService) { }
+  constructor(private vochSrvc: VoucherService) { }
 
   ngOnInit() {
     this.voucherListDS = new MatTableDataSource<Voucher>(this.vochSrvc.getList());

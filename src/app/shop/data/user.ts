@@ -2,6 +2,7 @@ import { Shop } from './shop';
 import { Voucher } from './voucher';
 import { Inventory } from './inventory';
 import { Group } from './group';
+import { GeneralVoucher } from './general-voucher';
 
 export interface User {
     username: string;
@@ -11,4 +12,5 @@ export interface User {
     vouchersList?: Voucher[];
     inventoriesList?: Inventory[];
     groupsList?: Group[];
+    genVochuersList?: GeneralVoucher[];
 }

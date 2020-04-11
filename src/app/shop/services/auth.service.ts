@@ -7,6 +7,7 @@ import { Inventory } from '../data/inventory';
 import { Group } from '../data/group';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { GeneralVoucher } from '../data/general-voucher';
 
 @Injectable()
 export class AuthService {
@@ -71,6 +72,15 @@ export class AuthService {
 
   public set groupsList(groupsList: Group[]) {
     this.userBehaviourSubject.value.groupsList = groupsList;
+    this.updateUserData();
+  }
+
+  public get genVochuersList() {
+    return this.userBehaviourSubject.value.genVochuersList || [];
+  }
+
+  public set genVochuersList(genVochuersList: GeneralVoucher[]) {
+    this.userBehaviourSubject.value.genVochuersList = genVochuersList;
     this.updateUserData();
   }
 

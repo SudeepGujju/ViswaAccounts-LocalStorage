@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { ShopService } from './services/shop.service';
-import { VouchersService } from './services/vouchers.service';
+import { VoucherService } from './services/vouchers.service';
 import { ShopDetailsComponent } from './shop-details/shop-details.component';
 import { ShopListComponent } from './shop-list/shop-list.component';
 import { ShopRoutingModule } from './shop-routing.module';
@@ -32,6 +32,9 @@ import { GroupDetailsComponent } from './group-details/group-details.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
 import { GroupService } from './services/group.service';
 import { GroupsListComponent } from './groups-list/groups-list.component';
+import { GenVoucherDetailsComponent } from './gen-voucher-details/gen-voucher-details.component';
+import { GeneralVouchersService } from './services/general-voucher.service';
+import { GenVoucherListComponent } from './gen-voucher-list/gen-voucher-list.component';
 
 
 @NgModule({
@@ -49,7 +52,9 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
     GroupDetailsComponent,
     InventoryListComponent,
     GroupsListComponent,
-    UpperCaseDirective
+    UpperCaseDirective,
+    GenVoucherDetailsComponent,
+    GenVoucherListComponent
   ],
   imports: [
     CommonModule,
@@ -71,12 +76,13 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
   ],
   providers: [
     ShopService,
-    VouchersService,
+    VoucherService,
     AuthService,
     InventoryService,
     GroupService,
+    GeneralVouchersService,
     AuthGuard
   ],
-  entryComponents: [ShopDetailsComponent, VouchersDetailsComponent, InventoryDetailsComponent, GroupDetailsComponent]
+  entryComponents: [ShopDetailsComponent, VouchersDetailsComponent, InventoryDetailsComponent, GroupDetailsComponent, GenVoucherDetailsComponent]
 })
 export class ShopModule { }

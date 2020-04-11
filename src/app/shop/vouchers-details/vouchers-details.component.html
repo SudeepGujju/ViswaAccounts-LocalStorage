@@ -30,7 +30,7 @@
         <div class="flex-fixed-dir" matAutocompleteOrigin #fromCodeOrigin="matAutocompleteOrigin">
             <mat-form-field class="space-3">
                 <mat-label>From Code</mat-label>
-                <input type="text" matInput formControlName="fromCode" maxlength="50" [matAutocomplete]="autoFrmCode" required uppercase [matAutocompleteConnectedTo]="fromCodeOrigin" (blur)="validateNSetFromCode($event.target.value)">
+                <input type="text" matInput formControlName="fromCode" maxlength="10" [matAutocomplete]="autoFrmCode" required uppercase [matAutocompleteConnectedTo]="fromCodeOrigin" (blur)="validateNSetFromCode($event.target.value)">
                 <mat-error *ngIf="fromCode.hasError('InvalidCode')">
                     Enter valid code
                 </mat-error>
@@ -46,7 +46,7 @@
         <div class="flex-fixed-dir" matAutocompleteOrigin #toCodeOrigin="matAutocompleteOrigin">
             <mat-form-field class="space-3">
                 <mat-label>To Code</mat-label>
-                <input type="text" matInput formControlName="toCode" maxlength="50" [matAutocomplete]="autoToCode" required uppercase [matAutocompleteConnectedTo]="toCodeOrigin" (blur)="validateNSetToCode($event.target.value)">
+                <input type="text" matInput formControlName="toCode" maxlength="10" [matAutocomplete]="autoToCode" required uppercase [matAutocompleteConnectedTo]="toCodeOrigin" (blur)="validateNSetToCode($event.target.value)">
                 <mat-error *ngIf="toCode.hasError('InvalidCode')">
                     Enter valid code
                 </mat-error>

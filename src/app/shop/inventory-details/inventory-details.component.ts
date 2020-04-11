@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { Shop } from '../data/shop';
-import { getDefaultDate } from '../utils/number-only.directive';
+import { AuthService } from '../services/auth.service';
 import { InventoryService } from '../services/inventory.service';
 import { ShopService } from '../services/shop.service';
-import { AuthService } from '../services/auth.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DateValidator } from '../utils/date-validate';
-import { startWith, map, distinctUntilChanged } from 'rxjs/operators';
+import { getDefaultDate } from '../utils/number-only.directive';
 
 @Component({
   selector: 'app-inventory-details',
@@ -23,8 +23,8 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
   filteredFromOptions: Observable<Shop[]>;
   filteredToOptions: Observable<Shop[]>;
   isSmallScrn: boolean = false;
-  private isSmallScrnSubscription: Subscription;
 
+  private isSmallScrnSubscription: Subscription;
   public defaultAmount = '0.00';
   public defaultDate = getDefaultDate();
   private shopsList: Shop[] = [];
@@ -52,8 +52,8 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
       invntryType: ['sale', [Validators.required]],
       SL: ['', [Validators.required, Validators.maxLength(50)]],
       date: [this.defaultDate, [Validators.required, Validators.maxLength(14), DateValidator()]],
-      fromCode: ['', {validators: [Validators.required, Validators.maxLength(50)]}],
-      toCode: ['', [Validators.required, Validators.maxLength(50)]],
+      fromCode: ['', {validators: [Validators.required, Validators.maxLength(10)]}],
+      toCode: ['', [Validators.required, Validators.maxLength(10)]],
       cashRcredit: ['cash', Validators.required],
       invcNo: ['', [Validators.required, Validators.maxLength(50)]],
       invcDate: [this.defaultDate, [Validators.required, Validators.maxLength(14), DateValidator()]],
@@ -85,7 +85,7 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
     this.filteredToOptions = this.toCode.valueChanges
         .pipe(
           startWith(''),
-          map(firmName => firmName ? this._filter(firmName) : this.shopsList.slice())
+          map(value => value ? this._filter(value) : this.shopsList.slice())
         );
 
     this.invntryType.valueChanges.subscribe((value) => {
@@ -318,15 +318,15 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (this.pageMode == 'create') {
-        const saveStatus = this.invtrySrvc.saveInventory(this.inventoryDtlsForm.value);
+      const saveStatus = this.invtrySrvc.saveInventory(this.inventoryDtlsForm.value);
 
-        if (!saveStatus) {
-          this.SL.setErrors({alreadyExists: true});
-          return false;
-        }
-      } else {
-        this.invtrySrvc.updateInventory(this.recordID, this.inventoryDtlsForm.value);
+      if (!saveStatus) {
+        this.SL.setErrors({alreadyExists: true});
+        return false;
       }
+    } else {
+      this.invtrySrvc.updateInventory(this.recordID, this.inventoryDtlsForm.value);
+    }
 
     this.dialogRef.close('saved');
   }

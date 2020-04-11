@@ -8,6 +8,8 @@ import { AuthGuard } from './auth.guard';
 import { RegistrationComponent } from './registration/registration.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
 import { GroupsListComponent } from './groups-list/groups-list.component';
+import { GenVoucherDetailsComponent } from './gen-voucher-details/gen-voucher-details.component';
+import { GenVoucherListComponent } from './gen-voucher-list/gen-voucher-list.component';
 
 
 const routes: Routes = [
@@ -41,6 +43,10 @@ const routes: Routes = [
     {
       path: 'GroupsList',
       component: GroupsListComponent
+    },
+    {
+      path: 'GeneralVouchersList',
+      component: GenVoucherListComponent
     }
   ]
   }

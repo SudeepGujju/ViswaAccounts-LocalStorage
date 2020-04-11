@@ -6,7 +6,7 @@ import { map, startWith } from 'rxjs/operators';
 import { Shop } from '../data/shop';
 import { AuthService } from '../services/auth.service';
 import { ShopService } from '../services/shop.service';
-import { VouchersService } from '../services/vouchers.service';
+import { VoucherService } from '../services/vouchers.service';
 import { DateValidator } from '../utils/date-validate';
 import { getDefaultDate } from '../utils/number-only.directive';
 
@@ -32,7 +32,7 @@ export class VouchersDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('fromCodeFirmName', {static: false}) fromCodeFirmEle: ElementRef;
   @ViewChild('toCodeFirmName', {static: false}) toCodeFirmEle: ElementRef;
 
-  constructor(public fb: FormBuilder, private vouchSrvc: VouchersService, private shpSrvc: ShopService, private authSrvc: AuthService, private dialogRef: MatDialogRef<VouchersDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public fb: FormBuilder, private vouchSrvc: VoucherService, private shpSrvc: ShopService, private authSrvc: AuthService, private dialogRef: MatDialogRef<VouchersDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
 
@@ -50,8 +50,8 @@ export class VouchersDetailsComponent implements OnInit, OnDestroy {
     this.voucherDtlsForm = this.fb.group({
       SL: [this.vouchSrvc.getList().length + 1, [Validators.required, Validators.maxLength(50)]],
       date: [this.defaultDate, [Validators.required, Validators.maxLength(14), DateValidator()]],
-      fromCode: ['', {validators: [Validators.required, Validators.maxLength(50)]}],
-      toCode: ['', [Validators.required, Validators.maxLength(50)]],
+      fromCode: ['', {validators: [Validators.required, Validators.maxLength(10)]}],
+      toCode: ['', [Validators.required, Validators.maxLength(10)]],
       billChNo: ['', Validators.maxLength(50)],
       desc: ['', [Validators.required, Validators.maxLength(50)]],
       receipt: [this.defaultAmount, Validators.maxLength(15)],

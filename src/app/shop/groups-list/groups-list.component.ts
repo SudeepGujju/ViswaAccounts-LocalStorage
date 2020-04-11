@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Group } from '../data/group';
 import { GroupService } from '../services/group.service';
 
-
 @Component({
   selector: 'app-groups-list',
   templateUrl: './groups-list.component.html',
